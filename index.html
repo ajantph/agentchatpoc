@@ -69,7 +69,9 @@
 		});
 	});
 	window.addEventListener("onEmbeddedMessagingButtonCreated", () => {
+		console.log("onEmbeddedMessagingButtonCreated event triggered");
 		embeddedservice_bootstrap.utilAPI.hideChatButton();
+		console.log("hideChatButton event triggered");
   	});
 	
 	</script>
