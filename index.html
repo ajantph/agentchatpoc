@@ -87,6 +87,7 @@
       console.log("onEmbeddedMessagingButtonCreated triggered");
 
       try {
+        console.log("onEmbeddedMessagingButtonCreated hideChatButton triggered");
         embeddedservice_bootstrap.utilAPI.hideChatButton();
       } catch (err) {
         console.error("Error hiding Salesforce chat button:", err);
