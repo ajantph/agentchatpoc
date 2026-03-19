@@ -41,94 +41,175 @@
     const utmCampaign = urlParams.get("utm_campaign") || "";
 
     const esdName = "MIAW_Agentforce_Channel";
+    const bootstrapScriptUrl =
+      "https://tripointegroup--agentchat.sandbox.my.site.com/ESWMIAWAgentforceChanne1773856493967/assets/js/bootstrap.min.js";
+
+    let isScriptLoaded = false;
+    let isInitializing = false;
+    let isInitialized = false;
+    let shouldLaunchAfterInit = false;
 
     function initEmbeddedMessaging() {
       try {
         console.log("initEmbeddedMessaging triggered");
-        embeddedservice_bootstrap.settings.language = "en_US";
 
-        // Initial state: hide Salesforce's default launcher
-        embeddedservice_bootstrap.settings.hideChatButtonOnLoad = true;
+        window.embeddedservice_bootstrap.settings.language = "en_US";
+        window.embeddedservice_bootstrap.settings.hideChatButtonOnLoad = true;
 
-        embeddedservice_bootstrap.init(
-				'00DWF00000BgmOT',
-				'MIAW_Agentforce_Channel',
-				'https://tripointegroup--agentchat.sandbox.my.site.com/ESWMIAWAgentforceChanne1773856493967',
-				{
-					scrt2URL: 'https://tripointegroup--agentchat.sandbox.my.salesforce-scrt.com'
-				}
+        window.embeddedservice_bootstrap.init(
+          "00DWF00000BgmOT",
+          "MIAW_Agentforce_Channel",
+          "https://tripointegroup--agentchat.sandbox.my.site.com/ESWMIAWAgentforceChanne1773856493967",
+          {
+            scrt2URL: "https://tripointegroup--agentchat.sandbox.my.salesforce-scrt.com"
+          }
         );
       } catch (err) {
-        console.error("Error loading Embedded Messaging:", err);
+        console.error("Error initializing Embedded Messaging:", err);
+        isInitializing = false;
       }
     }
 
-    // API is ready for pre-chat calls
+    function loadBootstrapScript() {
+      return new Promise((resolve, reject) => {
+        if (isScriptLoaded) {
+          resolve();
+          return;
+        }
+
+        const existingScript = document.querySelector(
+          'script[src="' + bootstrapScriptUrl + '"]'
+        );
+
+        if (existingScript) {
+          existingScript.addEventListener("load", () => {
+            isScriptLoaded = true;
+            resolve();
+          });
+          existingScript.addEventListener("error", reject);
+          return;
+        }
+
+        const script = document.createElement("script");
+        script.src = bootstrapScriptUrl;
+        script.type = "text/javascript";
+
+        script.onload = function () {
+          console.log("Bootstrap script loaded");
+          isScriptLoaded = true;
+          resolve();
+        };
+
+        script.onerror = function (err) {
+          reject(err);
+        };
+
+        document.body.appendChild(script);
+      });
+    }
+
+    function launchChat() {
+      if (!window.embeddedservice_bootstrap?.utilAPI) {
+        console.error("utilAPI is not available yet.");
+        return;
+      }
+
+      window.embeddedservice_bootstrap.utilAPI.launchChat()
+        .then(() => {
+          console.log("Chat launched");
+          customChatButton.style.display = "none";
+        })
+        .catch((err) => {
+          console.error("Error launching chat:", err);
+        });
+    }
+
     window.addEventListener("onEmbeddedMessagingReady", function () {
       console.log("onEmbeddedMessagingReady triggered");
 
-      embeddedservice_bootstrap.prechatAPI.setHiddenPrechatFields({
-        CommunityID: communityCRMId,
-        WebsiteURL1: websiteUrl.slice(0, 255),
-        WebsiteURL2: websiteUrl.slice(255, 510),
-        WebsiteURL3: websiteUrl.slice(510),
-        ReferrerURL1: referrerUrl.slice(0, 255),
-        ReferrerURL2: referrerUrl.slice(255, 510),
-        ReferrerURL3: referrerUrl.slice(510),
-        utm_source: utmSource,
-        utm_medium: utmMedium,
-        utm_campaign: utmCampaign,
-        ESD_Name: esdName
-      });
+      try {
+        window.embeddedservice_bootstrap.prechatAPI.setHiddenPrechatFields({
+          CommunityID: communityCRMId,
+          WebsiteURL1: websiteUrl.slice(0, 255),
+          WebsiteURL2: websiteUrl.slice(255, 510),
+          WebsiteURL3: websiteUrl.slice(510),
+          ReferrerURL1: referrerUrl.slice(0, 255),
+          ReferrerURL2: referrerUrl.slice(255, 510),
+          ReferrerURL3: referrerUrl.slice(510),
+          utm_source: utmSource,
+          utm_medium: utmMedium,
+          utm_campaign: utmCampaign,
+          ESD_Name: esdName
+        });
+      } catch (err) {
+        console.error("Error setting hidden prechat fields:", err);
+      }
+
+      isInitializing = false;
+      isInitialized = true;
+
+      try {
+        window.embeddedservice_bootstrap.utilAPI.hideChatButton();
+      } catch (err) {
+        console.error("Error hiding Salesforce chat button on ready:", err);
+      }
+
+      if (shouldLaunchAfterInit) {
+        shouldLaunchAfterInit = false;
+        launchChat();
+      }
     });
 
-    // Salesforce button has been added to the page: hide it explicitly
     window.addEventListener("onEmbeddedMessagingButtonCreated", function () {
       console.log("onEmbeddedMessagingButtonCreated triggered");
 
       try {
-        console.log("onEmbeddedMessagingButtonCreated hideChatButton triggered");
-        embeddedservice_bootstrap.utilAPI.hideChatButton();
+        window.embeddedservice_bootstrap.utilAPI.hideChatButton();
       } catch (err) {
         console.error("Error hiding Salesforce chat button:", err);
       }
     });
 
-    // Custom button launches chat
-    customChatButton.addEventListener("click", function () {
-      try {
-        embeddedservice_bootstrap.utilAPI.launchChat()
-          .then(() => {
-            customChatButton.style.display = "none";
-          })
-          .catch((err) => {
-            console.error("Error launching chat:", err);
-          });
-      } catch (err) {
-        console.error("Error launching chat:", err);
-      }
-    });
-
-    // Keep custom button hidden while conversation is open
     window.addEventListener("onEmbeddedMessagingConversationOpened", function () {
       console.log("Conversation opened");
       customChatButton.style.display = "none";
     });
 
-    // Show custom button again when conversation closes
     window.addEventListener("onEmbeddedMessagingConversationClosed", function () {
       console.log("Conversation closed");
       customChatButton.style.display = "block";
 
-      // Also keep Salesforce launcher hidden after close
       try {
-        embeddedservice_bootstrap.utilAPI.hideChatButton();
+        window.embeddedservice_bootstrap.utilAPI.hideChatButton();
       } catch (err) {
         console.error("Error rehiding Salesforce chat button:", err);
       }
     });
-  </script>
 
-  <script type='text/javascript' src='https://tripointegroup--agentchat.sandbox.my.site.com/ESWMIAWAgentforceChanne1773856493967/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
+    customChatButton.addEventListener("click", async function () {
+      try {
+        if (isInitialized) {
+          launchChat();
+          return;
+        }
+
+        if (isInitializing) {
+          console.log("MIAW is still initializing...");
+          shouldLaunchAfterInit = true;
+          return;
+        }
+
+        isInitializing = true;
+        shouldLaunchAfterInit = true;
+
+        await loadBootstrapScript();
+        initEmbeddedMessaging();
+      } catch (err) {
+        isInitializing = false;
+        shouldLaunchAfterInit = false;
+        console.error("Error loading or launching chat:", err);
+      }
+    });
+  </script>
 </body>
 </html>
