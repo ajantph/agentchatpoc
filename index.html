@@ -28,7 +28,7 @@
 <body>
   <button id="customChatButton" type="button">Chat with us</button>
 
-  <script type="text/javascript">
+  <script>
     const customChatButton = document.getElementById("customChatButton");
 
     const communityCRMId = "a00WG00000g3e5aYAA";
@@ -41,13 +41,37 @@
     const utmCampaign = urlParams.get("utm_campaign") || "";
 
     const esdName = "MIAW_Agentforce_Channel";
-    const bootstrapScriptUrl =
-      "https://tripointegroup--agentchat.sandbox.my.site.com/ESWMIAWAgentforceChanne1773856493967/assets/js/bootstrap.min.js";
+
+    const orgId = "00DWF00000BgmOT";
+    const deploymentName = "MIAW_Agentforce_Channel";
+    const siteUrl = "https://tripointegroup--agentchat.sandbox.my.site.com/ESWMIAWAgentforceChanne1773856493967";
+    const scrt2Url = "https://tripointegroup--agentchat.sandbox.my.salesforce-scrt.com";
+    const bootstrapScriptUrl = siteUrl + "/assets/js/bootstrap.min.js";
 
     let isScriptLoaded = false;
     let isInitializing = false;
     let isInitialized = false;
-    let shouldLaunchAfterInit = false;
+    let pendingLaunch = false;
+
+    function setHiddenPrechatFields() {
+      try {
+        window.embeddedservice_bootstrap.prechatAPI.setHiddenPrechatFields({
+          CommunityID: communityCRMId,
+          WebsiteURL1: websiteUrl.slice(0, 255),
+          WebsiteURL2: websiteUrl.slice(255, 510),
+          WebsiteURL3: websiteUrl.slice(510),
+          ReferrerURL1: referrerUrl.slice(0, 255),
+          ReferrerURL2: referrerUrl.slice(255, 510),
+          ReferrerURL3: referrerUrl.slice(510),
+          utm_source: utmSource,
+          utm_medium: utmMedium,
+          utm_campaign: utmCampaign,
+          ESD_Name: esdName
+        });
+      } catch (err) {
+        console.error("Error setting hidden prechat fields:", err);
+      }
+    }
 
     function initEmbeddedMessaging() {
       try {
@@ -57,16 +81,14 @@
         window.embeddedservice_bootstrap.settings.hideChatButtonOnLoad = true;
 
         window.embeddedservice_bootstrap.init(
-          "00DWF00000BgmOT",
-          "MIAW_Agentforce_Channel",
-          "https://tripointegroup--agentchat.sandbox.my.site.com/ESWMIAWAgentforceChanne1773856493967",
-          {
-            scrt2URL: "https://tripointegroup--agentchat.sandbox.my.salesforce-scrt.com"
-          }
+          orgId,
+          deploymentName,
+          siteUrl,
+          { scrt2URL: scrt2Url }
         );
       } catch (err) {
-        console.error("Error initializing Embedded Messaging:", err);
         isInitializing = false;
+        console.error("Error initializing Embedded Messaging:", err);
       }
     }
 
@@ -77,16 +99,14 @@
           return;
         }
 
-        const existingScript = document.querySelector(
-          'script[src="' + bootstrapScriptUrl + '"]'
-        );
-
-        if (existingScript) {
-          existingScript.addEventListener("load", () => {
+        const existing = document.querySelector(`script[src="${bootstrapScriptUrl}"]`);
+        if (existing) {
+          existing.addEventListener("load", function handleLoad() {
             isScriptLoaded = true;
             resolve();
-          });
-          existingScript.addEventListener("error", reject);
+          }, { once: true });
+
+          existing.addEventListener("error", reject, { once: true });
           return;
         }
 
@@ -109,8 +129,8 @@
     }
 
     function launchChat() {
-      if (!window.embeddedservice_bootstrap?.utilAPI) {
-        console.error("utilAPI is not available yet.");
+      if (!window.embeddedservice_bootstrap || !window.embeddedservice_bootstrap.utilAPI) {
+        console.warn("utilAPI not available yet");
         return;
       }
 
@@ -126,38 +146,9 @@
 
     window.addEventListener("onEmbeddedMessagingReady", function () {
       console.log("onEmbeddedMessagingReady triggered");
-
-      try {
-        window.embeddedservice_bootstrap.prechatAPI.setHiddenPrechatFields({
-          CommunityID: communityCRMId,
-          WebsiteURL1: websiteUrl.slice(0, 255),
-          WebsiteURL2: websiteUrl.slice(255, 510),
-          WebsiteURL3: websiteUrl.slice(510),
-          ReferrerURL1: referrerUrl.slice(0, 255),
-          ReferrerURL2: referrerUrl.slice(255, 510),
-          ReferrerURL3: referrerUrl.slice(510),
-          utm_source: utmSource,
-          utm_medium: utmMedium,
-          utm_campaign: utmCampaign,
-          ESD_Name: esdName
-        });
-      } catch (err) {
-        console.error("Error setting hidden prechat fields:", err);
-      }
-
-      isInitializing = false;
+      setHiddenPrechatFields();
       isInitialized = true;
-
-      try {
-        window.embeddedservice_bootstrap.utilAPI.hideChatButton();
-      } catch (err) {
-        console.error("Error hiding Salesforce chat button on ready:", err);
-      }
-
-      if (shouldLaunchAfterInit) {
-        shouldLaunchAfterInit = false;
-        launchChat();
-      }
+      isInitializing = false;
     });
 
     window.addEventListener("onEmbeddedMessagingButtonCreated", function () {
@@ -167,6 +158,11 @@
         window.embeddedservice_bootstrap.utilAPI.hideChatButton();
       } catch (err) {
         console.error("Error hiding Salesforce chat button:", err);
+      }
+
+      if (pendingLaunch) {
+        pendingLaunch = false;
+        launchChat();
       }
     });
 
@@ -188,25 +184,24 @@
 
     customChatButton.addEventListener("click", async function () {
       try {
-        if (isInitialized) {
+        if (isInitialized && window.embeddedservice_bootstrap?.utilAPI) {
           launchChat();
           return;
         }
 
         if (isInitializing) {
-          console.log("MIAW is still initializing...");
-          shouldLaunchAfterInit = true;
+          pendingLaunch = true;
           return;
         }
 
+        pendingLaunch = true;
         isInitializing = true;
-        shouldLaunchAfterInit = true;
 
         await loadBootstrapScript();
         initEmbeddedMessaging();
       } catch (err) {
         isInitializing = false;
-        shouldLaunchAfterInit = false;
+        pendingLaunch = false;
         console.error("Error loading or launching chat:", err);
       }
     });
