@@ -9,7 +9,7 @@
 	function initEmbeddedMessaging() {
 		try {
 			embeddedservice_bootstrap.settings.language = 'en_US';
-      embeddedservice_bootstrap.settings.hideChatButtonOnLoad = true;
+      		embeddedservice_bootstrap.settings.hideChatButtonOnLoad = true;
 			embeddedservice_bootstrap.init(
 				'00DWF00000BgmOT',
 				'MIAW_Agentforce_Channel',
@@ -35,24 +35,24 @@
 	window.addEventListener("onEmbeddedMessagingReady", e => {
 		console.log("onEmbeddedMessagingReady event triggered");
 	
-		embeddedservice_bootstrap.prechatAPI.setVisiblePrechatFields({
-			"_firstName": {
-			  "value": "",
-			  "isEditableByEndUser": true
-			},
-			"_lastName": {
-			  "value": "",
-			  "isEditableByEndUser": true
-			},
-			"_Phone": {
-			  "value": "",
-			  "isEditableByEndUser": true
-			},
-			"_Email": {
-			  "value": "",
-			  "isEditableByEndUser": true
-			}
-		});
+		// embeddedservice_bootstrap.prechatAPI.setVisiblePrechatFields({
+		// 	"_firstName": {
+		// 	  "value": "",
+		// 	  "isEditableByEndUser": true
+		// 	},
+		// 	"_lastName": {
+		// 	  "value": "",
+		// 	  "isEditableByEndUser": true
+		// 	},
+		// 	"_Phone": {
+		// 	  "value": "",
+		// 	  "isEditableByEndUser": true
+		// 	},
+		// 	"_Email": {
+		// 	  "value": "",
+		// 	  "isEditableByEndUser": true
+		// 	}
+		// });
 	  
 		embeddedservice_bootstrap.prechatAPI.setHiddenPrechatFields({
 			"CommunityID": communityCRMId,
@@ -65,7 +65,7 @@
 			"utm_source": decodeURIComponent(utmSource),
 			"utm_medium": decodeURIComponent(utmMedium),
 			"utm_medium": decodeURIComponent(utmCampaign),
-			"esdName": esdName
+			"ESD_Name": esdName
 		});
 	});
 	</script>
