@@ -70,8 +70,11 @@
 	});
 	window.addEventListener("onEmbeddedMessagingButtonCreated", () => {
 		console.log("onEmbeddedMessagingButtonCreated event triggered");
-		embeddedservice_bootstrap.utilAPI.hideChatButton();
-		console.log("hideChatButton event triggered");
+		try {
+			embeddedservice_bootstrap.utilAPI.hideChatButton();
+		} catch (err) {
+			console.error("Error hideChatButton chat button:", err);
+		}		
   	});
 	
 	</script>
