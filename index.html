@@ -93,6 +93,7 @@
 	window.addEventListener("onEmbeddedMessagingButtonCreated", () => {
 		console.log("onEmbeddedMessagingButtonCreated event triggered");
 		try {
+			console.log("hideChatButton");
 			embeddedservice_bootstrap.utilAPI.hideChatButton();
 		} catch (err) {
 			console.error("Error hideChatButton chat button:", err);
@@ -101,6 +102,7 @@
 		
 	document.getElementById('customChatButton').addEventListener('click', function () {
       try {
+		  console.log("launchChat");
         embeddedservice_bootstrap.utilAPI.launchChat();
       } catch (err) {
         console.error('Error launching chat:', err);
