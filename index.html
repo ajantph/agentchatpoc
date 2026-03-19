@@ -56,24 +56,24 @@
 	window.addEventListener("onEmbeddedMessagingReady", e => {
 		console.log("onEmbeddedMessagingReady event triggered");
 	
-		embeddedservice_bootstrap.prechatAPI.setVisiblePrechatFields({
-			"_firstName": {
-			  "value": "",
-			  "isEditableByEndUser": true
-			},
-			"_lastName": {
-			  "value": "",
-			  "isEditableByEndUser": true
-			},
-			"_Phone": {
-			  "value": "",
-			  "isEditableByEndUser": true
-			},
-			"_Email": {
-			  "value": "",
-			  "isEditableByEndUser": true
-			}
-		});
+		// embeddedservice_bootstrap.prechatAPI.setVisiblePrechatFields({
+		// 	"_firstName": {
+		// 	  "value": "",
+		// 	  "isEditableByEndUser": true
+		// 	},
+		// 	"_lastName": {
+		// 	  "value": "",
+		// 	  "isEditableByEndUser": true
+		// 	},
+		// 	"_Phone": {
+		// 	  "value": "",
+		// 	  "isEditableByEndUser": true
+		// 	},
+		// 	"_Email": {
+		// 	  "value": "",
+		// 	  "isEditableByEndUser": true
+		// 	}
+		// });
 	  
 		embeddedservice_bootstrap.prechatAPI.setHiddenPrechatFields({
 			"CommunityID": communityCRMId,
