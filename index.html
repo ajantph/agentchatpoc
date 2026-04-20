@@ -34,12 +34,14 @@
       		embeddedservice_bootstrap.settings.hideChatButtonOnLoad = true;
 			embeddedservice_bootstrap.init(
 				'00DWF00000BgmOT',
-				'MIAW_Agentforce_Channel',
+				// 'MIAW_Agentforce_Channel',
 				// 'MIAW_TPH_Website',
-				'https://tripointegroup--agentchat.sandbox.my.site.com/ESWMIAWAgentforceChanne1773856493967',
+				// 'https://tripointegroup--agentchat.sandbox.my.site.com/ESWMIAWAgentforceChanne1773856493967',
 				// 'https://tripointegroup--agentchat.sandbox.my.site.com/MIAWTphWebsite',
+				'MIAW_Agentforce_Web',
+				'https://tripointegroup--qa.sandbox.my.site.com/ESWMIAWAgentforceWeb1775061260318',
 				{
-					scrt2URL: 'https://tripointegroup--agentchat.sandbox.my.salesforce-scrt.com'
+					scrt2URL: 'https://tripointegroup--qa.sandbox.my.salesforce-scrt.com'
 				}
 			);
 		} catch (err) {
@@ -47,7 +49,7 @@
 		}
 	};
 	  
-	const communityCRMId = 'a00WF00000g8Xx2YAE';
+	const communityCRMId = 'a003Z00000pl87UQAQ';
 	// const communityCRMId = 'a00WF00000g8XxoYAE';
 	const websiteUrl = document.documentURI;
 	const referrerUrl = document.referrer;
@@ -113,7 +115,8 @@
     });
 	
 	</script>
-  	<script type='text/javascript' src='https://tripointegroup--agentchat.sandbox.my.site.com/ESWMIAWAgentforceChanne1773856493967/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
+	<script type='text/javascript' src='https://tripointegroup--qa.sandbox.my.site.com/ESWMIAWAgentforceWeb1775061260318/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
+  	<!-- <script type='text/javascript' src='https://tripointegroup--agentchat.sandbox.my.site.com/ESWMIAWAgentforceChanne1773856493967/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script> -->
 	<!-- <script type='text/javascript' src='https://tripointegroup--agentchat.sandbox.my.site.com/MIAWTphWebsite/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script> -->
   </body>
 </html>
