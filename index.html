@@ -31,7 +31,7 @@
 	function initEmbeddedMessaging() {
 		try {
 			embeddedservice_bootstrap.settings.language = 'en_US';
-      		embeddedservice_bootstrap.settings.hideChatButtonOnLoad = true;
+      		//embeddedservice_bootstrap.settings.hideChatButtonOnLoad = true;
 			/*
 			embeddedservice_bootstrap.init(
 				'00DWF00000BgmOT',
@@ -105,7 +105,7 @@
 		console.log("onEmbeddedMessagingButtonCreated event triggered");
 		try {
 			console.log("hideChatButton");
-			//embeddedservice_bootstrap.utilAPI.hideChatButton();
+			embeddedservice_bootstrap.utilAPI.hideChatButton();
 		} catch (err) {
 			console.error("Error hideChatButton chat button:", err);
 		}		
