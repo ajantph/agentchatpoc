@@ -32,6 +32,7 @@
 		try {
 			embeddedservice_bootstrap.settings.language = 'en_US';
       		embeddedservice_bootstrap.settings.hideChatButtonOnLoad = true;
+			/*
 			embeddedservice_bootstrap.init(
 				'00DWF00000BgmOT',
 				'MIAW_Agentforce_Channel',
@@ -40,12 +41,22 @@
 					scrt2URL: 'https://tripointegroup--agentchat.sandbox.my.salesforce-scrt.com'
 				}
 			);
+			*/
+			embeddedservice_bootstrap.init(
+				'00DWG000004eJBJ',
+				'MIAW_Agentforce_Web',
+				'https://tripointegroup--nintexupgr.sandbox.my.site.com/ESWMIAWAgentforceWeb1775061260318',
+				{
+					scrt2URL: 'https://tripointegroup--nintexupgr.sandbox.my.salesforce-scrt.com'
+				}
+			);
 		} catch (err) {
 			console.error('Error loading Embedded Messaging : ', err);
 		}
 	};
 	  
-	const communityCRMId = 'a00WF00000g8XxoYAE';
+	// const communityCRMId = 'a00WF00000g8XxoYAE';
+	const communityCRMId = 'a00WG00000g3e5aYAA';
 	const websiteUrl = document.documentURI;
 	const referrerUrl = document.referrer;
 	const urlParams = new URLSearchParams(window.location.search);
@@ -110,6 +121,7 @@
     });
 	
 	</script>
-	<script type='text/javascript' src='https://tripointegroup--agentchat.sandbox.my.site.com/ESWMIAWAgentforceChanne1773856493967/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
+	 <!--script type='text/javascript' src='https://tripointegroup--agentchat.sandbox.my.site.com/ESWMIAWAgentforceChanne1773856493967/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script-->
+	 <script type='text/javascript' src='https://tripointegroup--nintexupgr.sandbox.my.site.com/ESWMIAWAgentforceWeb1775061260318/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script> 
   </body>
 </html>
