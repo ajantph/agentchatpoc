@@ -31,7 +31,7 @@
 	function initEmbeddedMessaging() {
 		try {
 			embeddedservice_bootstrap.settings.language = 'en_US';
-      		embeddedservice_bootstrap.settings.hideChatButtonOnLoad = true;
+      		// embeddedservice_bootstrap.settings.hideChatButtonOnLoad = true;
 			/*
 			embeddedservice_bootstrap.init(
 				'00DWF00000BgmOT',
@@ -42,12 +42,22 @@
 				}
 			);
 			*/
+			/*
 			embeddedservice_bootstrap.init(
 				'00DWG000004eJBJ',
 				'MIAW_Agentforce_Web',
 				'https://tripointegroup--nintexupgr.sandbox.my.site.com/ESWMIAWAgentforceWeb1775061260318',
 				{
 					scrt2URL: 'https://tripointegroup--nintexupgr.sandbox.my.salesforce-scrt.com'
+				}
+			);
+			*/
+			embeddedservice_bootstrap.init(
+				'00Dfj00000T3OLI',
+				'ReservationAgent',
+				'https://orgfarm-f8a90f8b71-dev-ed.develop.my.site.com/ESWReservationAgent1782942426466',
+				{
+					scrt2URL: 'https://orgfarm-f8a90f8b71-dev-ed.develop.my.salesforce-scrt.com'
 				}
 			);
 		} catch (err) {
@@ -64,7 +74,8 @@
 	const utmMedium = urlParams.get('utm_medium');
 	const utmCampaign = urlParams.get('utm_campaign');
 	const esdName = 'MIAW - TPH Website';
-		
+
+	/*
 	window.addEventListener("onEmbeddedMessagingReady", e => {
 		console.log("onEmbeddedMessagingReady event triggered");
 	
@@ -119,9 +130,11 @@
         console.error('Error launching chat:', err);
       }
     });
+	*/
 	
 	</script>
 	 <!--script type='text/javascript' src='https://tripointegroup--agentchat.sandbox.my.site.com/ESWMIAWAgentforceChanne1773856493967/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script-->
-	 <script type='text/javascript' src='https://tripointegroup--nintexupgr.sandbox.my.site.com/ESWMIAWAgentforceWeb1775061260318/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script> 
+	 <!--script type='text/javascript' src='https://tripointegroup--nintexupgr.sandbox.my.site.com/ESWMIAWAgentforceWeb1775061260318/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script--> 
+	  <script type='text/javascript' src='https://orgfarm-f8a90f8b71-dev-ed.develop.my.site.com/ESWReservationAgent1782942426466/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
   </body>
 </html>
