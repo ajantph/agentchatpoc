@@ -31,7 +31,7 @@
 	function initEmbeddedMessaging() {
 		try {
 			embeddedservice_bootstrap.settings.language = 'en_US';
-      		// embeddedservice_bootstrap.settings.hideChatButtonOnLoad = true;
+      		embeddedservice_bootstrap.settings.hideChatButtonOnLoad = true;
 			/*
 			embeddedservice_bootstrap.init(
 				'00DWF00000BgmOT',
@@ -134,14 +134,14 @@
 	// 	}		
  //  	});
 		
-	// document.getElementById('customChatButton').addEventListener('click', function () {
- //      try {
-	// 	  console.log("launchChat");
- //        embeddedservice_bootstrap.utilAPI.launchChat();
- //      } catch (err) {
- //        console.error('Error launching chat:', err);
- //      }
- //    });
+	 document.getElementById('customChatButton').addEventListener('click', function () {
+	     try {
+			  console.log("launchChat");
+	        embeddedservice_bootstrap.utilAPI.launchChat();
+	      } catch (err) {
+	        console.error('Error launching chat:', err);
+	      }
+    });
 	
 	
 	</script>
