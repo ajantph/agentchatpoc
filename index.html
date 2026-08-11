@@ -86,6 +86,7 @@
 	const utmMedium = urlParams.get('utm_medium');
 	const utmCampaign = urlParams.get('utm_campaign');
 	const esdName = 'MIAW - TPH Website';
+	let isChatClosed = false;
 
 	
 	window.addEventListener("onEmbeddedMessagingReady", e => {
@@ -139,6 +140,12 @@
 		try {
 			console.log("hideChatButton when minimize");
 			embeddedservice_bootstrap.utilAPI.hideChatButton();
+			if (isChatClosed) {
+				console.log("remove all components");
+				embeddedservice_bootstrap.userVerificationAPI.clearSession(true).then(() => {
+				  embeddedservice_bootstrap.utilAPI.removeAllComponents()
+				});
+			}
 		} catch (err) {
 			console.error("Error hideChatButton chat button when minimize:", err);
 		}		
@@ -147,6 +154,7 @@
 		window.addEventListener("onEmbeddedMessagingConversationClosed", () => {
 	  // Insert your custom logic here
 	  console.log("The onEmbeddedMessagingConversationClosed by the user.");
+			isChatClosed = true;
 		// try {
 		// 	console.log("hideChatButton when minimize");
 		// 	embeddedservice_bootstrap.utilAPI.hideChatButton();
