@@ -136,6 +136,12 @@
 	window.addEventListener("onEmbeddedMessagingWindowMinimized", () => {
 	  // Insert your custom logic here
 	  console.log("The Enhanced Chat window was minimized by the user.");
+		try {
+			console.log("hideChatButton when minimize");
+			embeddedservice_bootstrap.utilAPI.hideChatButton();
+		} catch (err) {
+			console.error("Error hideChatButton chat button when minimize:", err);
+		}		
 	});
 		
 	 document.getElementById('customChatButton').addEventListener('click', function () {
