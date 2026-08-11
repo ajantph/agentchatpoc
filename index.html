@@ -143,6 +143,17 @@
 			console.error("Error hideChatButton chat button when minimize:", err);
 		}		
 	});
+
+		window.addEventListener("onEmbeddedMessagingConversationClosed", () => {
+	  // Insert your custom logic here
+	  console.log("The onEmbeddedMessagingConversationClosed by the user.");
+		// try {
+		// 	console.log("hideChatButton when minimize");
+		// 	embeddedservice_bootstrap.utilAPI.hideChatButton();
+		// } catch (err) {
+		// 	console.error("Error hideChatButton chat button when minimize:", err);
+		// }		
+	});
 		
 	 document.getElementById('customChatButton').addEventListener('click', function () {
 	     try {
