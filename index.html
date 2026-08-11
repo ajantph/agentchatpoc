@@ -140,12 +140,12 @@
 		try {
 			console.log("hideChatButton when minimize");
 			embeddedservice_bootstrap.utilAPI.hideChatButton();
-			if (isChatClosed) {
-				console.log("remove all components");
-				embeddedservice_bootstrap.userVerificationAPI.clearSession(true).then(() => {
-				  embeddedservice_bootstrap.utilAPI.removeAllComponents()
-				});
-			}
+			// if (isChatClosed) {
+			// 	console.log("remove all components");
+			// 	embeddedservice_bootstrap.userVerificationAPI.clearSession(true).then(() => {
+			// 	  embeddedservice_bootstrap.utilAPI.removeAllComponents()
+			// 	});
+			// }
 		} catch (err) {
 			console.error("Error hideChatButton chat button when minimize:", err);
 		}		
