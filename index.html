@@ -147,11 +147,11 @@
 	  console.log("The Enhanced Chat window was minimized by the user.");
 		try {
 			console.log("hideChatButton when minimize");
-			//embeddedservice_bootstrap.utilAPI.hideChatButton();
+			embeddedservice_bootstrap.utilAPI.hideChatButton();
 		
-			embeddedservice_bootstrap.userVerificationAPI.clearSession(true).then(() => {
-			  embeddedservice_bootstrap.utilAPI.removeAllComponents()
-			});
+			// embeddedservice_bootstrap.userVerificationAPI.clearSession(true).then(() => {
+			//   embeddedservice_bootstrap.utilAPI.removeAllComponents()
+			// });
 		} catch (err) {
 			console.error("Error hideChatButton chat button when minimize:", err);
 		}		
@@ -161,12 +161,13 @@
 	  // Insert your custom logic here
 	  console.log("The onEmbeddedMessagingConversationClosed by the user.");
 			isChatClosed = true;
-		// try {
-		// 	console.log("hideChatButton when minimize");
-		// 	embeddedservice_bootstrap.utilAPI.hideChatButton();
-		// } catch (err) {
-		// 	console.error("Error hideChatButton chat button when minimize:", err);
-		// }		
+		try {
+			console.log("hideChatButton when minimize");
+			embeddedservice_bootstrap.utilAPI.hideChatButton();
+			window.location.reload();
+		} catch (err) {
+			console.error("Error hideChatButton chat button when minimize:", err);
+		}		
 	});
 		
 	 document.getElementById('customChatButton').addEventListener('click', function () {
