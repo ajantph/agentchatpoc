@@ -147,8 +147,11 @@
 	  console.log("The Enhanced Chat window was minimized by the user.");
 		try {
 			console.log("hideChatButton when minimize");
+			console.log("isChatClosed : " + isChatClosed);
 			if (isChatClosed) {
-				embeddedservice_bootstrap.utilAPI.hideChatButton();
+				embeddedservice_bootstrap.userVerificationAPI.clearSession(true).then(() => {
+				  embeddedservice_bootstrap.utilAPI.hideChatButton();
+				});
 			}
 			// embeddedservice_bootstrap.userVerificationAPI.clearSession(true).then(() => {
 			//   embeddedservice_bootstrap.utilAPI.removeAllComponents()
