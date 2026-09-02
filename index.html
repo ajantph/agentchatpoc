@@ -95,7 +95,7 @@
 	const utmCampaign = urlParams.get('utm_campaign');
 	const esdName = 'MIAW - TPH Website';
 	let isChatClosed = false;
-
+	let isButtonHidden = false;
 	
 	window.addEventListener("onEmbeddedMessagingReady", e => {
 		console.log("onEmbeddedMessagingReady event triggered");
@@ -142,37 +142,71 @@
 	// 		console.error("Error hideChatButton chat button:", err);
 	// 	}		
  //  	});
-	window.addEventListener("onEmbeddedMessagingWindowMinimized", () => {
-	  // Insert your custom logic here
-	  console.log("The Enhanced Chat window was minimized by the user.");
-		try {
-			console.log("hideChatButton when minimize");
-			console.log("isChatClosed : " + isChatClosed);
-			if (isChatClosed) {
-				embeddedservice_bootstrap.userVerificationAPI.clearSession(true).then(() => {
-				  embeddedservice_bootstrap.utilAPI.hideChatButton();
-				});
-			}
-			// embeddedservice_bootstrap.userVerificationAPI.clearSession(true).then(() => {
-			//   embeddedservice_bootstrap.utilAPI.removeAllComponents()
-			// });
-		} catch (err) {
-			console.error("Error hideChatButton chat button when minimize:", err);
-		}		
-	});
+
+		let sessionCleared = false;
 
 		window.addEventListener("onEmbeddedMessagingConversationClosed", () => {
-	  // Insert your custom logic here
-	  console.log("The onEmbeddedMessagingConversationClosed by the user.");
-			isChatClosed = true;
-		try {
-			console.log("hideChatButton when onEmbeddedMessagingConversationClosed");
-			// embeddedservice_bootstrap.utilAPI.hideChatButton();
-			// window.location.reload();
-		} catch (err) {
-			console.error("Error hideChatButton chat button when minimize:", err);
-		}		
-	});
+		    console.log("Conversation closed");
+		    isChatClosed = true;
+		});
+		
+		window.addEventListener("onEmbeddedMessagingWindowMinimized", async () => {
+		    console.log("Window minimized");
+		
+		    if (!isChatClosed || sessionCleared) {
+		        return;
+		    }
+		
+		    sessionCleared = true;
+		
+		    try {
+		        console.log("Conversation ended + window minimized. Clearing session.");
+		
+		        await embeddedservice_bootstrap.userVerificationAPI.clearSession(true);
+		
+		        // clearSession changes the messaging UI/session state,
+		        // so don't allow another clearSession call for this lifecycle.
+		
+		        embeddedservice_bootstrap.utilAPI.hideChatButton();
+		
+		    } catch (err) {
+		        // Only reset on actual failure.
+		        sessionCleared = false;
+		        console.error("clearSession failed:", err);
+		    }
+		});
+		
+	// window.addEventListener("onEmbeddedMessagingWindowMinimized", () => {
+	//   // Insert your custom logic here
+	//   console.log("The Enhanced Chat window was minimized by the user.");
+	// 	try {
+	// 		console.log("hideChatButton when minimize");
+	// 		console.log("isChatClosed : " + isChatClosed);
+	// 		if (isChatClosed) {
+	// 			embeddedservice_bootstrap.userVerificationAPI.clearSession(true).then(() => {
+	// 			  embeddedservice_bootstrap.utilAPI.hideChatButton();
+	// 			});
+	// 		}
+	// 		// embeddedservice_bootstrap.userVerificationAPI.clearSession(true).then(() => {
+	// 		//   embeddedservice_bootstrap.utilAPI.removeAllComponents()
+	// 		// });
+	// 	} catch (err) {
+	// 		console.error("Error hideChatButton chat button when minimize:", err);
+	// 	}		
+	// });
+
+	// 	window.addEventListener("onEmbeddedMessagingConversationClosed", () => {
+	//   // Insert your custom logic here
+	//   console.log("The onEmbeddedMessagingConversationClosed by the user.");
+	// 		isChatClosed = true;
+	// 	try {
+	// 		console.log("hideChatButton when onEmbeddedMessagingConversationClosed");
+	// 		// embeddedservice_bootstrap.utilAPI.hideChatButton();
+	// 		// window.location.reload();
+	// 	} catch (err) {
+	// 		console.error("Error hideChatButton chat button when minimize:", err);
+	// 	}		
+	// });
 		
 	 document.getElementById('customChatButton').addEventListener('click', function () {
 	     try {
