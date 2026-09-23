@@ -50,15 +50,14 @@
 			// 	}
 			// );
 			
-			
-			embeddedservice_bootstrap.init(
-				'00DWG000004eJBJ',
-				'MIAW_Agentforce_Web',
-				'https://tripointegroup--nintexupgr.sandbox.my.site.com/ESWMIAWAgentforceWeb1775061260318',
-				{
-					scrt2URL: 'https://tripointegroup--nintexupgr.sandbox.my.salesforce-scrt.com'
-				}
-			);
+			// embeddedservice_bootstrap.init(
+			// 	'00DWG000004eJBJ',
+			// 	'MIAW_Agentforce_Web',
+			// 	'https://tripointegroup--nintexupgr.sandbox.my.site.com/ESWMIAWAgentforceWeb1775061260318',
+			// 	{
+			// 		scrt2URL: 'https://tripointegroup--nintexupgr.sandbox.my.salesforce-scrt.com'
+			// 	}
+			// );
 			
 			/*
 			embeddedservice_bootstrap.init(
@@ -79,14 +78,22 @@
 					scrt2URL: 'https://tripointegroup.my.salesforce-scrt.com'
 				}
 			);*/
+			embeddedservice_bootstrap.init(
+				'00DWF00000BdaBl',
+				'MIAW_Agentforce_Web_V2',
+				'https://tripointegroup--uat.sandbox.my.site.com/ESWMIAWAgentforc1790199966361',
+				{
+					scrt2URL: 'https://tripointegroup--uat.sandbox.my.salesforce-scrt.com'
+				}
+			);
 		} catch (err) {
 			console.error('Error loading Embedded Messaging : ', err);
 		}
 	};
 	  
 	// const communityCRMId = 'a00WF00000g8XxoYAE';
-	const communityCRMId = 'a00WG00000g3e5aYAA';
-	//const communityCRMId = 'a003Z00000plZWLQA2';
+	// const communityCRMId = 'a00WG00000g3e5aYAA';
+	const communityCRMId = 'a003Z00000plZWLQA2';
 	const websiteUrl = document.documentURI;
 	const referrerUrl = document.referrer;
 	const urlParams = new URLSearchParams(window.location.search);
@@ -221,9 +228,10 @@
 	</script>
 	 <!-- <script type='text/javascript' src='https://tripointegroup--agentchat.sandbox.my.site.com/ESWMIAWAgentforceChanne1773856493967/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script> -->
 	  <!-- <script type='text/javascript' src='https://tripointegroup--agentchat.sandbox.my.site.com/ESWMIAWAgentforceChanne1773856493967/assets/js/bootstrap.min.js'></script> -->
-	 <script type='text/javascript' src='https://tripointegroup--nintexupgr.sandbox.my.site.com/ESWMIAWAgentforceWeb1775061260318/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script> 
+	 <!-- <script type='text/javascript' src='https://tripointegroup--nintexupgr.sandbox.my.site.com/ESWMIAWAgentforceWeb1775061260318/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>  -->
 	  <!--script type='text/javascript' src='https://orgfarm-f8a90f8b71-dev-ed.develop.my.site.com/ESWReservationAgent1782942426466/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script-->
 	  <!--script type='text/javascript' src='https://tripointegroup.my.site.com/ESWMIAWAgentforceWeb1775061260318/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script-->
 	  <!-- <script type='text/javascript' src='https://tripointegroup--agentchat.sandbox.my.site.com/ESWMIAWAgentforceWeb1775061260318/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script> -->
+	  <script type='text/javascript' src='https://tripointegroup--uat.sandbox.my.site.com/ESWMIAWAgentforc1790199966361/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
   </body>
 </html>
